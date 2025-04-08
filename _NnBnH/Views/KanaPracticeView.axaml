@@ -1,0 +1,75 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+			 xmlns:vm="using:_NnBnH.ViewModels"
+			 xmlns:controls="using:_NnBnH.Views.UIcontrols"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="_NnBnH.Views.KanaPracticeView"
+			 x:DataType="vm:KanaPracticeViewModel">
+
+	<UserControl.DataContext>
+		<vm:KanaPracticeViewModel/>
+	</UserControl.DataContext>
+
+
+	<UniformGrid Rows="3">
+
+		<Grid Height="100">
+			<TextBlock Text="{Binding CurrentShow}" FontSize="50" TextAlignment="Center"/>
+		</Grid>
+
+		<DockPanel Width="400" Height="20">
+
+			<Grid DockPanel.Dock="Top">
+				<TextBlock Text="{Binding CurrentCorrectCounter}" HorizontalAlignment="Right"/>
+				<TextBlock Text="{Binding CurrentAllAnswers}" HorizontalAlignment="Center"/>
+				<TextBlock Text="{Binding CurrentIncorrectCounter}" HorizontalAlignment="Left"/>
+			</Grid>
+
+
+			<Border
+				DockPanel.Dock="Top"
+				Height="10"
+				CornerRadius="4"
+				ClipToBounds="True"
+				>
+				<controls:ElementsPercentViewer
+					ElementsColors="#2a5225,#8a1115" ElementsPoints="0,0"
+				/>
+			</Border>
+
+		</DockPanel>
+		
+		<UniformGrid Columns="4" HorizontalAlignment="Center" >
+			<Button
+					x:Name="Key1"
+					Content="Q"
+					Command="{Binding Check}"
+					CommandParameter="key1"/>
+			<Button
+					x:Name="Key2"
+					Content="W"
+					Command="{Binding Check}"
+					CommandParameter="key2"/>
+			<Button
+					x:Name="Key3"
+					Content="E"
+					Command="{Binding Check}"
+					CommandParameter="key3"/>
+			<Button
+					x:Name="R"
+					Content="Q"
+					Command="{Binding Check}"
+					CommandParameter="key4"/>
+		</UniformGrid>
+
+
+
+
+	</UniformGrid>
+
+
+
+
+</UserControl>

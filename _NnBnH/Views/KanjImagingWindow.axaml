@@ -1,0 +1,76 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:vm="using:_NnBnH.ViewModels"
+		mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="_NnBnH.Views.KanjImagingWindow"
+        Title="Kanji Imaging Process"
+		
+		x:DataType="vm:KanjImagingWindowViewModel"
+		
+		Padding="40">
+
+
+	<Window.DataContext>
+		<vm:KanjImagingWindowViewModel/>
+	</Window.DataContext>
+
+	<Grid RowDefinitions="Auto,*">
+
+		<Grid Grid.Row="0" ColumnDefinitions="*,*">
+			<Grid Grid.Column="0" VerticalAlignment="Center" RowDefinitions="Auto,*">
+
+				<Grid Grid.Row="0" Width="250" Height="300">
+					<Rectangle StrokeThickness="2" StrokeDashArray="5" Stroke="#fff"/>
+					<Image Source="{Binding ImageSrc}" Stretch="Fill"/>
+				</Grid>
+				<TextBlock Grid.Row="1" HorizontalAlignment="Center" Text="{Binding FormattedPageWH}"/>
+			</Grid>
+
+			<Border
+				Height="300"
+				Grid.Column="1"
+				BorderThickness="0 0 0 1"
+				BorderBrush="#fff">
+
+				<DockPanel>
+
+					<UniformGrid Columns="2" DockPanel.Dock="Top">
+						<TextBlock VerticalAlignment="Center" Text="Paper"/>
+						<ComboBox SelectedIndex="0">
+							<ComboBoxItem Content="A4 | ISO 216"/>
+						</ComboBox>
+					</UniformGrid>
+
+					<Button
+						DockPanel.Dock="Bottom"
+						HorizontalAlignment="Stretch"
+						HorizontalContentAlignment="Center"
+						Content="Print!"
+						Command="{Binding PrintButton}"/>
+
+				</DockPanel>
+
+			</Border>
+
+		</Grid>
+
+		<UniformGrid Rows="2" Grid.Row="1">
+
+			<UniformGrid Rows="2" Grid.Row="0">
+				<TextBlock Text="{Binding  ProcessedPages}" TextAlignment="Center"/>
+				<ProgressBar Minimum="0" Maximum="{Binding PlannedPages}" Value="{Binding ProcessedPages}"/>
+			</UniformGrid>
+
+
+			<UniformGrid Rows="2" Grid.Row="1">
+				<TextBlock Text="Common Progress" TextAlignment="Center"/>
+				<ProgressBar/>
+			</UniformGrid>
+
+		</UniformGrid>
+
+	</Grid>
+
+</Window>

@@ -1,0 +1,135 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:_NnBnH.ViewModels"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+		xmlns:controls="using:_NnBnH.Views.UIcontrols"
+        mc:Ignorable="d" d:DesignWidth="1200" d:DesignHeight="600"
+		Width="1200"
+		Height="600"
+        x:Class="_NnBnH.Views.MainWindow"
+        x:DataType="vm:MainWindowViewModel"
+        Icon="avares://_NnBnH/Assets/Logo.ico"
+        Title="{Binding VersionLabel}"
+		RequestedThemeVariant="Dark"
+		
+		>
+
+	<Design.DataContext>
+		<vm:MainWindowViewModel/>
+	</Design.DataContext>
+
+	<Window.Styles>
+		<Style Selector="StackPanel.SideBarItemSelector > Grid > Button">
+			<Setter Property="Background" Value="Transparent"/>
+			<Setter Property="HorizontalAlignment" Value="Stretch"/>
+			<Setter Property="HorizontalContentAlignment" Value="Center"/>
+		</Style>
+
+
+		<Style Selector="StackPanel.SideBarItemSelector > Grid > Grid > Border">
+			<Setter Property="BorderBrush" Value="#FFF"/>
+			<Setter Property="BorderThickness" Value="1 0 0 0"/>
+
+		</Style>
+
+		<Style Selector="StackPanel.SideBarItemSelector > Grid > Grid > Border > Button">
+			<Setter Property="Background" Value="Transparent"/>
+			<Setter Property="HorizontalAlignment" Value="Stretch"/>
+			<Setter Property="HorizontalContentAlignment" Value="Center"/>
+		</Style>
+	</Window.Styles>
+
+	<Grid RowDefinitions="10,25*,1*">
+
+		<SplitView Grid.Row="1" IsPaneOpen="True" DisplayMode="CompactInline" OpenPaneLength="200">
+
+			<SplitView.Pane>
+
+				<DockPanel>
+
+					<DockPanel DockPanel.Dock="Top">
+						<Border
+							DockPanel.Dock="Left"
+							ClipToBounds="True"
+							CornerRadius="30"
+							Width="50"
+							Height="50"
+							Margin="10">
+							<Image Width="60" Height="60" Source="/Assets/Logo.png"></Image>
+						</Border>
+
+						<TextBlock VerticalAlignment="Center" HorizontalAlignment="Center">日本語の勉強の本</TextBlock>
+					</DockPanel>
+
+					<Border
+					DockPanel.Dock="Top"
+					BorderBrush="#AAA"
+					BorderThickness="1 0 0 0"
+					Margin="5 0"
+					>
+						<StackPanel Classes="SideBarItemSelector">
+
+							<Grid>
+								<Button Command="{Binding ShowMainPage}" Content="本 Main"/>
+							</Grid>
+
+							<Grid RowDefinitions="*,*">
+
+								<Button Grid.Row="0" Content="あ kana" Command="{Binding ShowKanaMenu}"/>
+
+								<Grid ColumnDefinitions="10*,15*" Grid.Row="1">
+									<Border Grid.Column="1">
+										<Button Command="{Binding ShowKanaPracticeMenu}" Content="運動 Train"/>
+									</Border>
+								</Grid>
+							</Grid>
+
+							<Grid>
+								<Button Content="漢字 Kanji" Command="{Binding ShowKanjiMenu}"/>
+							</Grid>
+
+							<Grid>
+								<Button Content="...と思う Constructions"/>
+							</Grid>
+
+							<Grid>
+								<Button  Content="Sentence Explicitting"/>
+							</Grid>
+						</StackPanel>
+					</Border>
+
+					<Button x:Name="ExitButton" Click="Button_Click" Background="Transparent" DockPanel.Dock="Bottom" HorizontalAlignment="Stretch"  HorizontalContentAlignment="Center">Exit</Button>
+					<Button  Background="Transparent" DockPanel.Dock="Bottom" HorizontalAlignment="Stretch"  HorizontalContentAlignment="Center">⚙ Settings</Button>
+
+					<!--fr filler-->
+					<Grid></Grid>
+				</DockPanel>
+
+			</SplitView.Pane>
+
+			<SplitView.Content>
+				<!--<TextBlock Text="{Binding _test}"/>-->
+				<Grid RowDefinitions="*,20">
+					<TransitioningContentControl Grid.Row="0" Content="{Binding CurrentPage}"/>
+					<TextBlock Foreground="#AAA" HorizontalAlignment="Right" Grid.Row="1" Text="{Binding VersionLabel}"/>
+				</Grid>
+			</SplitView.Content>
+
+
+		</SplitView>
+
+
+		<Grid Grid.Row="2">
+			<Border BorderBrush="#878565" BorderThickness="2" IsVisible="{Binding IsAutonomeMode}">
+				<TextBlock Background="#595302" 
+						   FontFamily="JetBrainsMonoNerdFontMonoRegular" 
+						   Text="&#xe654; You're running in Autonomus mode."
+						   TextAlignment="Left"
+						   VerticalAlignment="Stretch"
+						   />
+			</Border>
+		</Grid>
+	</Grid>
+
+</Window>

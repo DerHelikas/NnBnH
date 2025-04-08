@@ -1,0 +1,179 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+			 xmlns:vm="using:_NnBnH.ViewModels"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="_NnBnH.Views.KanjiDisplayView"
+			 x:DataType="vm:KanjiDisplayViewModel">
+
+	<UserControl.DataContext>
+		<vm:KanjiDisplayViewModel/>
+	</UserControl.DataContext>
+
+	<UserControl.Styles>
+
+		<Style Selector="Grid.KanjiLine">
+			<!--<Setter Property="ColumnDefinitions" Value="100"/>-->
+			<Setter Property="Height" Value="110"/>
+		</Style>
+
+		<Style Selector="Grid.KanjiLine > Border">
+			<Setter Property="Margin" Value="10 0"/>
+		</Style>
+
+		<Style Selector="Grid.KanjiLine > Border:nth-child(1)">
+			<Setter Property="BorderBrush" Value="#fff"/>
+			<Setter Property="BorderThickness" Value="0 0 0 2"/>
+			<Setter Property="CornerRadius" Value="2"/>
+			<Setter Property="ClipToBounds" Value="True"/>
+		</Style>
+
+		<Style Selector="Grid.KanjiLine > Border:nth-child(2)">
+			<Setter Property="BorderBrush" Value="#fff"/>
+			<Setter Property="BorderThickness" Value="0 0 0 2"/>
+			<Setter Property="CornerRadius" Value="2"/>
+			<Setter Property="ClipToBounds" Value="True"/>
+
+		</Style>
+
+
+		<Style Selector="Grid.KanjiLine > Border:nth-child(1) > DockPanel > TextBlock">
+			<Setter Property="FontSize" Value="60"/>
+			<Setter Property="VerticalAlignment" Value="Center"/>
+			<Setter Property="HorizontalAlignment" Value="Center"/>
+		</Style>
+
+	</UserControl.Styles>
+
+	<DockPanel Margin="5">
+
+		<DockPanel Margin="0 0 0 10" DockPanel.Dock="Top">
+			<TextBlock HorizontalAlignment="Center" Text="{Binding KanjiGUI.Count, StringFormat=' {0}/60 000 Kanji are avaible'}"/>
+		</DockPanel>
+
+		<DockPanel DockPanel.Dock="Top" Height="60">
+			<TextBlock DockPanel.Dock="Top" HorizontalAlignment="Stretch" TextAlignment="Center" Text="Kanji 「漢字」" FontSize="20"/>
+			<TextBlock DockPanel.Dock="Left" Text="🔎" VerticalAlignment="Center" FontSize="20"/>
+			<ComboBox SelectedIndex="0" VerticalAlignment="Center">
+				<ComboBoxItem Content="字"/>
+				<ComboBoxItem Content="Meaning"/>
+			</ComboBox>
+		</DockPanel>
+		
+		<DockPanel DockPanel.Dock="Top">
+			<Button Height="30" Content="⎙" Command="{Binding PrintKanjiShowWindow}"/>
+		
+		</DockPanel>
+		<UniformGrid IsVisible="{Binding ShowTaskBar}"  DockPanel.Dock="Top">
+			
+			<TextBlock Grid.Column="0" Text="{Binding TaskBarState}" HorizontalAlignment="Center"/>
+			<ProgressBar Grid.Column="1" IsVisible="{Binding ShowProgressBar}" Value="{Binding TaskBarPercent}" Maximum="100" Minimum="0" DockPanel.Dock="Bottom"/>
+		</UniformGrid>
+
+		<ListBox Background="#111" ItemsSource="{Binding KanjiGUI}" DockPanel.Dock="Top" HorizontalAlignment="Stretch">
+
+
+			<ItemsControl.ItemTemplate>
+				<DataTemplate>
+
+					<Grid Classes="KanjiLine" ColumnDefinitions="15*,40*,40*,20*">
+
+						<Border Grid.Column="0">
+							<DockPanel>
+								<TextBlock  DockPanel.Dock="Top" Height="60" Text="{Binding KanjiSymbol}"/>
+							</DockPanel>
+						</Border>
+
+
+						<Border Grid.Column="1">
+							<Grid>
+								<ListBox Background="#0000" ItemsSource="{Binding Meanings}">
+
+
+									<ItemsControl.ItemsPanel>
+										<ItemsPanelTemplate>
+											<UniformGrid Columns="{Binding .}"/>
+										</ItemsPanelTemplate>
+									</ItemsControl.ItemsPanel>
+
+
+									<ItemsControl.ItemTemplate>
+										<DataTemplate>
+											<TextBlock HorizontalAlignment="Center" Text="{Binding .}"/>
+										</DataTemplate>
+									</ItemsControl.ItemTemplate>
+								</ListBox>
+
+							</Grid>
+						</Border>
+
+
+						<Border Grid.Column="2">
+
+							<Grid ColumnDefinitions="*,*">
+
+
+								<DataGrid
+										  Grid.Column="0"
+										  ItemsSource="{Binding Reading.Onyomi}"
+										  BorderThickness="1" BorderBrush="Gray"
+										  IsReadOnly="True">
+									<DataGrid.Columns>
+										<DataGridTextColumn Width="*" Header="On-"   Binding="{Binding .}"/>
+									</DataGrid.Columns>
+								</DataGrid>
+
+								<DataGrid
+										Grid.Column="1"
+										ItemsSource="{Binding Reading.Kunyomi}"
+										BorderThickness="1" BorderBrush="Gray"
+										IsReadOnly="True">
+									<DataGrid.Columns>
+										<DataGridTextColumn Width="*" Header="kun-"   Binding="{Binding .}"/>
+									</DataGrid.Columns>
+								</DataGrid>
+
+							</Grid>
+
+						</Border>
+
+						<Border Grid.Column="3">
+
+							<Grid RowDefinitions="10*,50*">
+
+								<TextBlock Text="Keys" Background="#000" TextAlignment="Center"/>
+
+								<ListBox Background="#0000" Grid.Row="1" ItemsSource="{Binding Keys}">
+
+
+									<ItemsControl.ItemsPanel>
+										<ItemsPanelTemplate>
+
+											<UniformGrid Columns="{Binding .}"/>
+										</ItemsPanelTemplate>
+									</ItemsControl.ItemsPanel>
+
+
+									<ItemsControl.ItemTemplate>
+										<DataTemplate>
+											<TextBlock HorizontalAlignment="Center" Text="{Binding .}"/>
+										</DataTemplate>
+									</ItemsControl.ItemTemplate>
+								</ListBox>
+							</Grid>
+
+						</Border>
+
+
+					</Grid>
+
+				</DataTemplate>
+			</ItemsControl.ItemTemplate>
+
+		</ListBox>
+
+
+		<Grid/>
+	</DockPanel>
+</UserControl>

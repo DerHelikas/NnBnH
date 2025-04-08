@@ -1,0 +1,42 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="_NnBnH.Views.MainPageUserControlView">
+
+	<UserControl.Styles>
+		<Style Selector="DockPanel.MainTiltleStyle > TextBlock">
+			<Setter Property="DockPanel.Dock" Value="Top"/>
+			<Setter Property="TextAlignment" Value="Center"/>
+			
+		</Style>
+	</UserControl.Styles>
+	
+	
+	<Grid RowDefinitions="10*,30*">
+
+		<Border 
+			HorizontalAlignment="Center"
+			Width="300"
+			Grid.Row="0"
+			BorderThickness="0 0 0 1"
+			BorderBrush="#fff"
+			Margin="0"
+			Padding="0">
+			
+			<DockPanel Grid.Row="0" Classes="MainTiltleStyle">
+				<TextBlock FontSize="50" Text="本"/>
+				<TextBlock FontSize="20" Text="Welcome to the Main Page"/>
+			</DockPanel>
+			
+		</Border>
+
+		<Grid Grid.Row="1" Background="#111" Margin="0 20">
+			<TextBlock Text="Here you can do... maybe anything, not my care"/>
+			
+		</Grid>
+
+	</Grid>
+
+</UserControl>

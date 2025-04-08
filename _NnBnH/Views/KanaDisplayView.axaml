@@ -1,0 +1,141 @@
+﻿<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="using:_NnBnH.ViewModels"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+			 mc:Ignorable="d" d:DesignWidth="1100" d:DesignHeight="600"
+             x:Class="_NnBnH.Views.KanaDisplayView"
+			 x:DataType="vm:KanaDisplayViewModel"
+			 >
+
+	<Design.DataContext>
+		<vm:KanaDisplayViewModel/>
+	</Design.DataContext>
+
+	<UserControl.Styles>
+		<Style Selector="Border.KanaElement">
+			<Setter Property="Width" Value="55"/>
+			<Setter Property="Height" Value="70"/>
+			<Setter Property="BorderBrush" Value="#fff"/>
+			<Setter Property="BorderThickness" Value="2"/>
+			<Setter Property="CornerRadius" Value="2"/>
+			<Setter Property="ClipToBounds" Value="True"/>
+
+			<Setter Property="Margin" Value="5"/>
+		</Style>
+
+		<Style Selector="Border.KanaElement > DockPanel">
+			<Setter Property="Background" Value="#111"/>
+			<!--<Setter Property="Width" Value="50"/>
+			<Setter Property="Height" Value="55"/>-->
+		</Style>
+
+		<Style Selector="Border.KanaElement > DockPanel:pointerover">
+			<Setter Property="Background" Value="#444"/>
+		</Style>
+
+		<Style Selector="Border.KanaElement > DockPanel > TextBlock">
+			<Setter Property="DockPanel.Dock" Value="Top"/>
+			<Setter Property="TextAlignment" Value="Center"/>
+			<Setter Property="FontSize" Value="18"/>
+		</Style>
+
+	</UserControl.Styles>
+
+
+	<DockPanel Margin="5">
+		<DockPanel DockPanel.Dock="Top" Height="60">
+			<TextBlock DockPanel.Dock="Top" HorizontalAlignment="Stretch" TextAlignment="Center" Text="Kana 「かな」" FontSize="20"/>
+			<TextBlock DockPanel.Dock="Left" Text="🔎" VerticalAlignment="Center" FontSize="20"/>
+			<ComboBox SelectedIndex="0" VerticalAlignment="Center">
+				<ComboBoxItem Content="あ"/>
+				<ComboBoxItem Content="話"/>
+			</ComboBox>
+			<TextBox  VerticalAlignment="Stretch" Height="1"/>
+		</DockPanel>
+
+		<DockPanel DockPanel.Dock="Top" Margin="5">
+			<DockPanel DockPanel.Dock="Top" Margin="2">
+				<Button Height="30" Content="⎙"/>
+				<Button Height="30" Content="↻" Command="{Binding ReloadKanaTable}"/>
+			</DockPanel>
+
+			<UniformGrid IsVisible="{Binding ShowTaskBar}"  DockPanel.Dock="Bottom">
+				<TextBlock Grid.Column="0" Text="{Binding TaskBarState}" HorizontalAlignment="Center"/>
+				<ProgressBar Grid.Column="1" IsVisible="{Binding ShowProgressBar}" Value="{Binding TaskBarPercent}" Maximum="100" Minimum="0" DockPanel.Dock="Bottom"/>
+			</UniformGrid>
+		</DockPanel>
+
+		<Grid>
+			<Border
+				CornerRadius="10"
+				BorderBrush="#222"
+				BorderThickness="1"
+				ClipToBounds="True"
+				Padding="5"
+				Margin="5">
+
+
+				<ListBox
+					Grid.Row="0"
+					Background="Transparent"
+					ItemsSource="{Binding KanaHolder}"
+					>
+					<ItemsControl.ItemTemplate>
+						<DataTemplate>
+
+							<Grid ColumnDefinitions="100,*">
+								<TextBlock VerticalAlignment="Center" Text="{Binding RowName}" Grid.Column="0"/>
+
+								<Border
+									Grid.Column="1"
+									BorderBrush="#fff"
+									BorderThickness="0 0 0 2"
+								>
+									<Grid>
+
+										<ItemsControl ItemsSource="{Binding Row}">
+
+											<ItemsControl.ItemsPanel>
+												<ItemsPanelTemplate>
+													<UniformGrid Columns="{Binding Row.Count}"/>
+												</ItemsPanelTemplate>
+											</ItemsControl.ItemsPanel>
+
+
+
+											<ItemsControl.ItemTemplate>
+												<DataTemplate>
+													<Border Classes="KanaElement">
+														<DockPanel>
+															<UniformGrid Margin="10 0" DockPanel.Dock="Top" Columns="2">
+																<TextBlock FontSize="20" Text="{Binding Kana.Hiragana}"/>
+																<TextBlock FontSize="20" Text="{Binding Kana.Katagana}"/>
+															</UniformGrid>
+
+															<TextBlock Text="{Binding Pronunciation}"/>
+														</DockPanel>
+													</Border>
+												</DataTemplate>
+
+											</ItemsControl.ItemTemplate>
+										</ItemsControl>
+
+									</Grid>
+								</Border>
+
+							</Grid>
+
+						</DataTemplate>
+					</ItemsControl.ItemTemplate>
+				</ListBox>
+
+
+			</Border>
+		</Grid>
+
+	</DockPanel>
+
+
+</UserControl>
+

@@ -1,0 +1,77 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="using:_NnBnH.ViewModels"
+			 mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="_NnBnH.Views.SettingsView"
+			 x:DataType="vm:SettingsViewModel"
+			 >
+
+	<Design.DataContext>
+		<vm:SettingsViewModel/>
+	</Design.DataContext>
+
+	<UserControl.Styles>
+		<Style Selector="StackPanel.SideBarItemSelector > Grid > Button">
+			<Setter Property="Background" Value="Transparent"/>
+			<Setter Property="HorizontalAlignment" Value="Stretch"/>
+			<Setter Property="HorizontalContentAlignment" Value="Center"/>
+		</Style>
+
+
+		<Style Selector="StackPanel.SideBarItemSelector > Grid > Grid > Border">
+			<Setter Property="BorderBrush" Value="#FFF"/>
+			<Setter Property="BorderThickness" Value="1 0 0 0"/>
+
+		</Style>
+
+		<Style Selector="StackPanel.SideBarItemSelector > Grid > Grid > Border > Button">
+			<Setter Property="Background" Value="Transparent"/>
+			<Setter Property="HorizontalAlignment" Value="Stretch"/>
+			<Setter Property="HorizontalContentAlignment" Value="Center"/>
+		</Style>
+	</UserControl.Styles>
+
+	<SplitView IsPaneOpen="True" DisplayMode="CompactInline" OpenPaneLength="200">
+		<SplitView.Pane>
+
+			<StackPanel Classes="SideBarItemSelector">
+
+				<Grid>
+					<Button Content="Common Settings 本"/>
+				</Grid>
+
+			</StackPanel>
+		</SplitView.Pane>
+
+		<SplitView.Content>
+			<ListBox  Background="Transparent">
+				<UniformGrid Rows="2" Background="Transparent">
+
+
+					<DockPanel>
+						<TextBlock DockPanel.Dock="Top" Text="From cfg file"/>
+						<DataGrid
+								DockPanel.Dock="Top"
+								IsReadOnly="True"
+								GridLinesVisibility="All"
+								ItemsSource="{Binding FromSettingsData}">
+							<DataGrid.Columns>
+								<DataGridTextColumn Width="*" Header="Proprty name" Binding="{Binding Item1}"/>
+								<DataGridTextColumn Header="Proprty value" Binding="{Binding Item2}"/>
+							</DataGrid.Columns>
+
+						</DataGrid>
+
+
+
+					</DockPanel>
+
+
+				</UniformGrid>
+			</ListBox>
+		</SplitView.Content>
+	</SplitView>
+
+</UserControl>
