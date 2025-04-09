@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace _NnBnH.MainNnBnH.Functions.CSadditions
+namespace _NnBnH.MainNnBnH.CodeElements.CSadditions
 {
     public static class IEnumerableAdditions
     {
@@ -25,6 +25,6 @@ namespace _NnBnH.MainNnBnH.Functions.CSadditions
             return !(index < 0) && !(index > enumerable.Count());
         }
 
-        public static bool IsNullOrEmpty<T>(this IEnumerable<T> enumer) => (enumer?.Count() == 0) || (enumer == null);
+        public static bool IsNullOrEmpty<T>(this IEnumerable<T> enumer) => enumer?.Count() == 0 || enumer == null;
     }
 }

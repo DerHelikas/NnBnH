@@ -17,6 +17,7 @@ namespace _NnBnH.Models
     /// </summary>
     public class KanaGroupedLine
     {
+        public KanaGroupedLine() { }
 
         public KanaGroupedLine(List<KanaSymbol> row)
         {
@@ -57,11 +58,11 @@ namespace _NnBnH.Models
         public KanaSymbol(KanaWritting kana, string prononseation)
         {
             Kana = kana;
-            this.Pronunciation = prononseation;
+            this.Romanji = prononseation;
         }
 
         public KanaWritting Kana { get; private set; } = new KanaWritting("","");
-        public string Pronunciation { get; set; }
+        public string Romanji { get; set; }
 
 
 

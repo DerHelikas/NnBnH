@@ -1,5 +1,5 @@
 ﻿using _NnBnH.Models;
-using _NnBnH.MainNnBnH.Exceptions;
+using _NnBnH.MainNnBnH.CodeElements.Exceptions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,13 +7,13 @@ using System.Text;
 using System.Threading.Tasks;
 
 
-namespace _NnBnH.MainNnBnH
+namespace _NnBnH.MainNnBnH.RuntimeElements
 {
     /// <summary>
     /// Variables which lifetime takes within program's runtime. (DRV During Runtime Variables)
     /// <para>Program start---------- Enviroument.exit([code])</para>
     /// </summary>
-    public static class DuringRuntimeVars
+    public static class DuringRuntimeVariables
     {
 
         /// <summary>

@@ -1,6 +1,5 @@
 ﻿using _NnBnH.Models;
 using _NnBnH.MainNnBnH.ExternalProviders.DB;
-using _NnBnH.MainNnBnH.Functions.CSadditions;
 using _NnBnH.MainNnBnH.SettingsClass;
 using Avalonia.Controls;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -11,6 +10,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Data;
 using System.Threading.Tasks;
+using _NnBnH.MainNnBnH.RuntimeElements;
 
 namespace _NnBnH.ViewModels
 {
@@ -38,7 +38,7 @@ namespace _NnBnH.ViewModels
             {
 
                 Exception ex;
-                KanaConnection?.LondAllKanaFromDB(ProgramSettings.KanaTable_Name, out ex);
+                KanaConnection?.LondAllKanaFromDB(ProgramSettings.KanaTable_DB_Name, out ex);
 
             });
 
@@ -70,9 +70,7 @@ namespace _NnBnH.ViewModels
                 return;
             // All next code will be ignored in DesignMode. 
 
-            KanaHolder = new ObservableCollection<KanaGroupedLine>(MainNnBnH.DuringRuntimeVars.ActuallKanaTable);
-
-            ReloadKanaTable();
+            KanaHolder = new ObservableCollection<KanaGroupedLine>(DuringRuntimeVariables.ActuallKanaTable);
         }
 
         private void KanaConnection_LoadedKanaEvent(int KanaCount, DB_ObjectFetchedEventArgs dB_ObjectFetchedEventArgs)

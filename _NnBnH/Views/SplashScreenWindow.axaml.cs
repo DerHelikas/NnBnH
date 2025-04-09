@@ -6,11 +6,11 @@ using System;
 using System.Net;
 using System.Net.Http;
 using System.Threading;
-
-using _NnBnH.MainNnBnH;
 using _NnBnH.MainNnBnH.SettingsClass;
 using System.Threading.Tasks;
 using MsBox.Avalonia;
+using _NnBnH.MainNnBnH.Actions;
+using _NnBnH.MainNnBnH.RuntimeElements;
 
 namespace _NnBnH.Views;
 
@@ -37,7 +37,8 @@ public partial class SplashScreenWindow : Window
 
         this.TasksLog.Text = string.Empty;
         this.TasksLog.Text += "╭─Loading Settings...\n";
-        _NnBnH.MainNnBnH.SettingsClass.ProgramSettings.LoadSettings();
+        Exception ex = null;
+        _NnBnH.MainNnBnH.SettingsClass.ProgramSettings.LoadSettings(out ex);
         this.ProgressBar.Value += 15;
         this.TasksLog.Text += "╰─Finshed\n";
 
@@ -46,14 +47,17 @@ public partial class SplashScreenWindow : Window
         await CheckWebAPI(showMsBoxes);
         //+15
 
+        MainNnBnH.AssetsMaintaining.CommonAssetsController controller =
+        new MainNnBnH.AssetsMaintaining.CommonAssetsController();
+
+        //(out exceptionsFromLoad);
         System.Collections.Generic.List<Exception> exceptionsFromLoad = new System.Collections.Generic.List<Exception>();
-        _NnBnH.MainNnBnH.ExternalProviders.PreloadedAssets.PreloadedAssetsTryLoad(out exceptionsFromLoad);
+        await controller.CheckAndLoadAll();
 
         this.ProgressBar.Value += exceptionsFromLoad.Count * 15;
 
         LoadingIsFinishedEvent?.Invoke();
     }
-
 
 
     /// <summary>
@@ -62,45 +66,53 @@ public partial class SplashScreenWindow : Window
     /// <param name="showMsBoxes"></param>
     private async Task CheckWebAPI(bool showMsBoxes = true)
     {
-        this.TasksLog.Text += "╭─Trying to get status of WebAPI\n";
-        try
+
+        while (true)
         {
-
-            string resp = await
-                 MainNnBnH.ExternalProviders.WebAPI.WebAPIconnection.HttpProvider
-                 .GetStringAsync(ProgramSettings.WebApiUri);
-
-            this.TasksLog.Text = "╰─" + resp;
-
-            if (resp != "OnLine")
-                throw new Exception("API behaves weird: " + resp);
-        }
-        catch (Exception ex)
-        {
-            this.TasksLog.Text += $"╰─{ex.Message}\n";
-
-            if (showMsBoxes)
+            this.TasksLog.Text += "╭─Trying to get status of WebAPI\n";
+            try
             {
 
-                //MsBox.Avalonia.MessageBoxManager.GetMessageBoxStandard("", "");
-                var b = MessageBoxManager.GetMessageBoxStandard
-                          (
-                         "Web API error",
-                           ex.Message
-                          + "\n Go into the Autonomus mode?\n All your progress will not be memorized.\n" +
-                          "No - exit from the application",
-                          MsBox.Avalonia.Enums.ButtonEnum.YesNo,
-                          MsBox.Avalonia.Enums.Icon.Wifi);
+                string resp = await
+                     MainNnBnH.ExternalProviders.WebAPI.WebAPIconnection.HttpProvider
+                     .GetStringAsync(new Uri(ProgramSettings.WebApi_Uri, "api/Status"));
 
-                var res = await b.ShowAsync();
+                this.TasksLog.Text = "╰─" + resp;
 
-                if (res == MsBox.Avalonia.Enums.ButtonResult.Yes)
+                if (resp != "OnLine")
+                    throw new Exception("API behaves weird: " + resp);
+
+                else break;
+            }
+            catch (Exception ex)
+            {
+                this.TasksLog.Text += $"╰─{ex.Message}\n";
+
+                if (showMsBoxes)
                 {
-                    DuringRuntimeVars.IsAutonomusMode = true;
-                }
-                else
-                {
-                    ApplicationActions.ApplicationExit();
+
+                    var b = MessageBoxManager.GetMessageBoxStandard
+                              (
+                             "Web API error",
+                              $"{ex.Message}\n" +
+                              "Go into the Autonomus mode?\n" +
+                              "All your progress will not be memorized.\n" +
+                              "Cancel - exit from the application\n" +
+                              "No - Retry",
+                              MsBox.Avalonia.Enums.ButtonEnum.YesNoCancel,
+                              MsBox.Avalonia.Enums.Icon.Wifi);
+
+                    var res = await b.ShowAsync();
+
+                    if (res == MsBox.Avalonia.Enums.ButtonResult.Yes)
+                    {
+                        DuringRuntimeVariables.IsAutonomusMode = true;
+                        break;
+                    }
+                    else if (res == MsBox.Avalonia.Enums.ButtonResult.Cancel)
+                    {
+                        ApplicationActions.ApplicationExit();
+                    }
                 }
             }
 

@@ -12,7 +12,6 @@
         Icon="avares://_NnBnH/Assets/Logo.ico"
         Title="{Binding VersionLabel}"
 		RequestedThemeVariant="Dark"
-		
 		>
 
 	<Design.DataContext>
@@ -123,11 +122,13 @@
 		<Grid Grid.Row="2">
 			<Border BorderBrush="#878565" BorderThickness="2" IsVisible="{Binding IsAutonomeMode}">
 				<TextBlock Background="#595302" 
-						   FontFamily="JetBrainsMonoNerdFontMonoRegular" 
-						   Text="&#xe654; You're running in Autonomus mode."
+						   FontFamily="{StaticResource JetBrainsMonoNF}" 
+						   Text=" You're running in Autonomus mode."
 						   TextAlignment="Left"
 						   VerticalAlignment="Stretch"
 						   />
+				
+				 
 			</Border>
 		</Grid>
 	</Grid>

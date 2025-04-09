@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 
-namespace _NnBnH.MainNnBnH
+namespace _NnBnH.MainNnBnH.SettingsClass
 {
 
     /// <summary>

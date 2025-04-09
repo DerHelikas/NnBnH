@@ -46,9 +46,4 @@
 	    <HintPath>..\TestingField\bin\Debug\net8.0\Libs\Avalonia.Labs.Gif.dll</HintPath>
 	  </Reference>
 	</ItemGroup>
-
-	<ItemGroup>
-	  <Folder Include="Models\DataWorker\" />
-	  <Folder Include="Views\TrainingViews\" />
-	</ItemGroup>
 </Project>

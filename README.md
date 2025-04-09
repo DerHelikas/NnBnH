@@ -1,4 +1,4 @@
-# <p align="center">Nihongo no bekiyo no hon</center><center>日本語の勉強の本 
+# <p align="center">Nihongo no bekiyo no hon <br>「日本語の勉強の本」</p>
 
 <p align="center"> <img  src="./_NnBnH/Assets/NewLogo.svg" style="width: 150px; border-radius: 20px"></p>
 

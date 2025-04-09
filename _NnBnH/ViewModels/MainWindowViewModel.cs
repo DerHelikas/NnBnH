@@ -1,5 +1,4 @@
-﻿
-using _NnBnH.MainNnBnH;
+﻿using _NnBnH.MainNnBnH.RuntimeElements;
 using _NnBnH.MainNnBnH.SettingsClass;
 using _NnBnH.Views;
 using Avalonia.Controls;
@@ -16,17 +15,17 @@ public partial class MainWindowViewModel : ViewModelBase
     private ViewModelBase _currentPage = new MainPageUserControlViewModel();
 
     [ObservableProperty]
-    private bool _isAutonomeMode = !DuringRuntimeVars.IsAutonomusMode;
+    private bool _isAutonomeMode = DuringRuntimeVariables.IsAutonomusMode;
 
     public string VersionLabel { get; } =
-        $"\"{_NnBnH.MainNnBnH.ApplicationVersionData.VersionCode}\" :" +
-        $"{MainNnBnH.ApplicationVersionData.Version[0]}." +
-        $"{MainNnBnH.ApplicationVersionData.Version[1]}." +
-        $"{MainNnBnH.ApplicationVersionData.Version[2]}";
+        $"\"{ApplicationVersionData.VersionCode}\" :" +
+        $"{ApplicationVersionData.Version[0]}." +
+        $"{ApplicationVersionData.Version[1]}." +
+        $"{ApplicationVersionData.Version[2]}";
 
     public MainWindowViewModel()
     {
-        _isAutonomeMode = DuringRuntimeVars.IsAutonomusMode;
+        _isAutonomeMode = !DuringRuntimeVariables.IsAutonomusMode;
     }
     
 
